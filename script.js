@@ -27,12 +27,13 @@ class Rectangle {
 }
 
 class Circle {
-  constructor(xpos, ypos, width, height, speed) {
+  constructor(xpos, ypos, width, height, speedx, speedy) {
     this.xpos = xpos;
     this.ypos = ypos;
     this.width = width;
     this.height = height;
-    this.speed = speed;
+    this.speedy = speedy;
+    this.speedx = speedx;
   }
   drawCircle() {
     //old circle logic:
@@ -46,8 +47,8 @@ class Circle {
   }
 
   moveBall() {
-    this.ypos += this.speed;
-    // this.xpos += this.speed;
+    this.ypos += this.speedy;
+    this.xpos += this.speedx;
   }
 
   roofCollision() {
@@ -57,11 +58,35 @@ class Circle {
       return false;
     }
   }
+
+  rightWallCollision() {
+    if (this.xpos + this.width > canvas.width) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  leftWallCollision() {
+    if (this.xpos < 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bottomWallCollision() {
+    if (this.ypos + this.width > canvas.height) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 const Paddle = new Rectangle(canvas.width / 2 - 40, canvas.height - 20, 80, 20);
 
-const Ball = new Circle(canvas.width / 2, canvas.height - 34, 20, 20, -5);
+const Ball = new Circle(canvas.width / 2, canvas.height - 34, 20, 20, 5, -5);
 
 let clearCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -87,8 +112,22 @@ let animationLoop = () => {
   Paddle.drawRect();
   Ball.moveBall();
   Ball.drawCircle();
+
+  if (Ball.bottomWallCollision(Ball)) {
+    Ball.speedy *= -1;
+    console.log("u lost");
+  }
+
   if (Ball.roofCollision(Ball)) {
-    Ball.speed *= -1;
+    Ball.speedy *= -1;
+  }
+
+  if (Ball.leftWallCollision(Ball)) {
+    Ball.speedx *= -1;
+  }
+
+  if (Ball.rightWallCollision(Ball)) {
+    Ball.speedx *= -1;
   }
 };
 
