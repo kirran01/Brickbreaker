@@ -16,11 +16,11 @@ class Rectangle {
   }
 
   rectMoveLeft() {
-    this.xpos -= 5;
+    this.xpos -= 10;
   }
 
   rectMoveRight() {
-    this.xpos += 5;
+    this.xpos += 10;
   }
 
   drawRect() {
@@ -29,32 +29,34 @@ class Rectangle {
 }
 
 class Circle {
-  constructor(xpos, ypos, radius, startAngle, endAngle) {
+  constructor(xpos, ypos, width, height) {
     this.xpos = xpos;
     this.ypos = ypos;
-    this.radius = radius;
-    this.startAngle = startAngle;
-    this.endAngle = endAngle;
+    this.width = width;
+    this.height = height;
   }
   drawCircle() {
-    ctx.arc(this.xpos, this.ypos, this.radius, this.startAngle, this.endAngle); // ctx.arc(150, 170, 75, 0, Math.PI * 2) example circle
-    ctx.lineWidth = 20;
-    ctx.stroke();
-    ctx.fill();
+    // ctx.beginPath()
+    // ctx.arc(this.xpos, this.ypos, this.radius, this.startAngle, this.endAngle); // ctx.arc(150, 170, 75, 0, Math.PI * 2) example circle
+    // ctx.lineWidth = 20;
+    // ctx.stroke();
+    // ctx.fill();
+    // ctx.closePath()
+    ctx.fillRect(this.xpos, this.ypos, this.width, this.height);
+  }
+
+  launch() {
+    this.ypos -= 5;
   }
 }
 
 const Paddle = new Rectangle(canvas.width / 2 - 40, canvas.height - 20, 80, 20);
-Paddle.drawRect();
 
-const Ball = new Circle(
-  canvas.width / 2,
-  canvas.height - 34,
-  4,
-  0,
-  Math.PI * 2
-);
-Ball.drawCircle();
+const Ball = new Circle(canvas.width / 2, canvas.height - 34, 20, 20);
+
+let clearCanvas = () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+};
 
 window.addEventListener("keydown", (e) => {
   switch (e.code) {
@@ -69,11 +71,23 @@ window.addEventListener("keydown", (e) => {
 });
 
 let frameCount = 0;
-
 let animationLoop = () => {
+  console.log(frameCount);
   frameCount++;
-  ctx.context.clearRect(0, 0, canvas.width, height);
-  
+  //clearCanvas();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  Paddle.drawRect();
+  Ball.launch();
+  Ball.drawCircle();
 };
 
-setInterval(animationLoop, 16);
+window.onload = () => {
+  document.getElementById("start-button").onclick = () => {
+    startGame();
+  };
+
+  function startGame() {
+    intervalId = setInterval(animationLoop, 16);
+  }
+};
