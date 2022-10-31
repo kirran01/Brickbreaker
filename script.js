@@ -36,19 +36,26 @@ class Circle {
     this.speedx = speedx;
   }
   drawCircle() {
-    //old circle logic:
-    // ctx.beginPath()
-    // ctx.arc(this.xpos, this.ypos, this.radius, this.startAngle, this.endAngle); // ctx.arc(150, 170, 75, 0, Math.PI * 2) example circle
-    // ctx.lineWidth = 20;
-    // ctx.stroke();
-    // ctx.fill();
-    // ctx.closePath()
     ctx.fillRect(this.xpos, this.ypos, this.width, this.height);
   }
 
   moveBall() {
     this.ypos += this.speedy;
     this.xpos += this.speedx;
+  }
+
+  rectangleCollision(Rectangle) {
+    if (
+      this.xpos < Rectangle.xpos + Rectangle.width &&
+      this.xpos + this.width > Rectangle.xpos &&
+      this.ypos < Rectangle.ypos + Rectangle.height &&
+      this.ypos + this.height > Rectangle.ypos
+    ) {
+      console.log("collided with rect");
+      return true;
+    } else {
+      return false;
+    }
   }
 
   roofCollision() {
@@ -86,7 +93,7 @@ class Circle {
 
 const Paddle = new Rectangle(canvas.width / 2 - 40, canvas.height - 20, 80, 20);
 
-const Ball = new Circle(canvas.width / 2, canvas.height - 34, 20, 20, 5, -5);
+const Ball = new Circle(canvas.width / 2, canvas.height - 50, 20, 20, 5, -5);
 
 let clearCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -113,9 +120,12 @@ let animationLoop = () => {
   Ball.moveBall();
   Ball.drawCircle();
 
-  if (Ball.bottomWallCollision(Ball)) {
+  if (Ball.rectangleCollision(Paddle)) {
     Ball.speedy *= -1;
-    console.log("u lost");
+  }
+
+  if (Ball.bottomWallCollision(Ball)) {
+    clearInterval(intervalId);
   }
 
   if (Ball.roofCollision(Ball)) {
@@ -137,6 +147,6 @@ window.onload = () => {
   };
 
   function startGame() {
-    intervalId = setInterval(animationLoop, 16);
+    intervalId = setInterval(animationLoop, 75);
   }
 };

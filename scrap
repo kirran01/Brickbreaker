@@ -1,0 +1,7 @@
+//old circle logic:
+// ctx.beginPath()
+// ctx.arc(this.xpos, this.ypos, this.radius, this.startAngle, this.endAngle); // ctx.arc(150, 170, 75, 0, Math.PI * 2) example circle
+// ctx.lineWidth = 20;
+// ctx.stroke();
+// ctx.fill();
+// ctx.closePath()
