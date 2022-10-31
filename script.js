@@ -93,7 +93,7 @@ class Circle {
 
 const Paddle = new Rectangle(canvas.width / 2 - 40, canvas.height - 20, 80, 20);
 
-const Ball = new Circle(canvas.width / 2, canvas.height - 50, 20, 20, 5, -5);
+const Ball = new Circle(canvas.width / 2, canvas.height - 50, 20, 20, 2, -2);
 
 let clearCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -112,13 +112,31 @@ window.addEventListener("keydown", (e) => {
 });
 
 let frameCount = 0;
+let brickStorage = [];
+for (let i = 0; i <= 12; i++) {
+  const Brick = new Rectangle(50 * i + 30, 10, 40, 40);
+  brickStorage.push(Brick);
+}
+
+for (let i = 0; i <= 12; i++) {
+  const Brick1 = new Rectangle(50 * i + 30, 60, 40, 40);
+  brickStorage.push(Brick1);
+}
+
+for (let i = 0; i <= 12; i++) {
+  const Brick2 = new Rectangle(50 * i + 30, 110, 40, 40);
+  brickStorage.push(Brick2);
+}
+
 let animationLoop = () => {
-  // console.log(frameCount);
-  frameCount++;
   clearCanvas();
   Paddle.drawRect();
   Ball.moveBall();
   Ball.drawCircle();
+
+  for (let j = 0; j < brickStorage.length; j++) {
+    brickStorage[j].drawRect();
+  }
 
   if (Ball.rectangleCollision(Paddle)) {
     Ball.speedy *= -1;
@@ -147,6 +165,6 @@ window.onload = () => {
   };
 
   function startGame() {
-    intervalId = setInterval(animationLoop, 75);
+    intervalId = setInterval(animationLoop, 16);
   }
 };
