@@ -113,20 +113,34 @@ window.addEventListener("keydown", (e) => {
 
 let frameCount = 0;
 let brickStorage = [];
-for (let i = 0; i <= 12; i++) {
-  const Brick = new Rectangle(50 * i + 30, 10, 40, 40);
-  brickStorage.push(Brick);
-}
+let row1BrickStorage = [];
+let row2BrickStorage = [];
+let row3BrickStorage = [];
 
 for (let i = 0; i <= 12; i++) {
-  const Brick1 = new Rectangle(50 * i + 30, 60, 40, 40);
-  brickStorage.push(Brick1);
+  const BrickRow1 = new Rectangle(50 * i + 30, 10, 40, 40);
+  const BrickRow2 = new Rectangle(50 * i + 30, 60, 40, 40);
+  const BrickRow3 = new Rectangle(50 * i + 30, 110, 40, 40);
+  row1BrickStorage.push(BrickRow1);
+  row2BrickStorage.push(BrickRow2);
+  row3BrickStorage.push(BrickRow3);
 }
 
-for (let i = 0; i <= 12; i++) {
-  const Brick2 = new Rectangle(50 * i + 30, 110, 40, 40);
-  brickStorage.push(Brick2);
-}
+brickStorage.push(row1BrickStorage);
+brickStorage.push(row2BrickStorage);
+brickStorage.push(row3BrickStorage);
+
+// for (let i = 0; i <= 12; i++) {
+//   const Brick1 = new Rectangle(50 * i + 30, 60, 40, 40);
+
+//   brickStorage.push(Brick1);
+// }
+
+// for (let i = 0; i <= 12; i++) {
+//   const Brick2 = new Rectangle(50 * i + 30, 110, 40, 40);
+
+//   brickStorage.push(Brick2);
+// }
 
 let animationLoop = () => {
   clearCanvas();
@@ -134,8 +148,10 @@ let animationLoop = () => {
   Ball.moveBall();
   Ball.drawCircle();
 
-  for (let j = 0; j < brickStorage.length; j++) {
-    brickStorage[j].drawRect();
+  for (let i = 0; i < brickStorage.length; i++) {
+    for (let j = 0; j < brickStorage[i].length; j++) {
+      brickStorage[i][j].drawRect();
+    }
   }
 
   if (Ball.rectangleCollision(Paddle)) {
