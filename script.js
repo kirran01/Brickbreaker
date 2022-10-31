@@ -5,8 +5,6 @@ canvas.width = 700;
 canvas.height = 500;
 let intervalId;
 
-// ctx.strokeStyle = 'green'; // !
-
 class Rectangle {
   constructor(xpos, ypos, width, height) {
     this.xpos = xpos;
@@ -29,13 +27,15 @@ class Rectangle {
 }
 
 class Circle {
-  constructor(xpos, ypos, width, height) {
+  constructor(xpos, ypos, width, height, speed) {
     this.xpos = xpos;
     this.ypos = ypos;
     this.width = width;
     this.height = height;
+    this.speed = speed;
   }
   drawCircle() {
+    //old circle logic:
     // ctx.beginPath()
     // ctx.arc(this.xpos, this.ypos, this.radius, this.startAngle, this.endAngle); // ctx.arc(150, 170, 75, 0, Math.PI * 2) example circle
     // ctx.lineWidth = 20;
@@ -45,14 +45,23 @@ class Circle {
     ctx.fillRect(this.xpos, this.ypos, this.width, this.height);
   }
 
-  launch() {
-    this.ypos -= 5;
+  moveBall() {
+    this.ypos += this.speed;
+    // this.xpos += this.speed;
+  }
+
+  roofCollision() {
+    if (this.ypos < 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
 const Paddle = new Rectangle(canvas.width / 2 - 40, canvas.height - 20, 80, 20);
 
-const Ball = new Circle(canvas.width / 2, canvas.height - 34, 20, 20);
+const Ball = new Circle(canvas.width / 2, canvas.height - 34, 20, 20, -5);
 
 let clearCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -72,14 +81,15 @@ window.addEventListener("keydown", (e) => {
 
 let frameCount = 0;
 let animationLoop = () => {
-  console.log(frameCount);
+  // console.log(frameCount);
   frameCount++;
-  //clearCanvas();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+  clearCanvas();
   Paddle.drawRect();
-  Ball.launch();
+  Ball.moveBall();
   Ball.drawCircle();
+  if (Ball.roofCollision(Ball)) {
+    Ball.speed *= -1;
+  }
 };
 
 window.onload = () => {
