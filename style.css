@@ -1,6 +1,7 @@
 body{
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
+    text-align: center;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -11,12 +12,13 @@ body{
 }
 
 button{
+    border-radius: 10px;
     margin:25px;
     display: inline-block;
     outline: 0;
     text-align: center;
     cursor: pointer;
-    padding: 17px 30px;
+    padding: 12px 25px;
     border: 0;
     color: #fff;
     font-size: 17.5px;
@@ -31,4 +33,9 @@ button{
 button:hover {
     background-color: #000;
     color: #fff;
+}
+
+.UI{
+    display: flex;
+    align-items: center;
 }
