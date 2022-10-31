@@ -14,11 +14,17 @@ class Rectangle {
   }
 
   rectMoveLeft() {
-    this.xpos -= 10;
+    if (this.xpos > 0) {
+      this.xpos -= 10;
+    }
+    // this.xpos -= 10;
   }
 
   rectMoveRight() {
-    this.xpos += 10;
+    if (this.xpos + this.width < canvas.width) {
+      this.xpos += 10;
+    }
+    // this.xpos += 10;
   }
 
   drawRect() {
@@ -130,18 +136,6 @@ brickStorage.push(row1BrickStorage);
 brickStorage.push(row2BrickStorage);
 brickStorage.push(row3BrickStorage);
 
-// for (let i = 0; i <= 12; i++) {
-//   const Brick1 = new Rectangle(50 * i + 30, 60, 40, 40);
-
-//   brickStorage.push(Brick1);
-// }
-
-// for (let i = 0; i <= 12; i++) {
-//   const Brick2 = new Rectangle(50 * i + 30, 110, 40, 40);
-
-//   brickStorage.push(Brick2);
-// }
-
 let animationLoop = () => {
   clearCanvas();
   Paddle.drawRect();
@@ -150,6 +144,7 @@ let animationLoop = () => {
 
   for (let i = 0; i < brickStorage.length; i++) {
     for (let j = 0; j < brickStorage[i].length; j++) {
+      // brickStorage[i][j].rectangleCollision(brickStorage[i][j]);
       brickStorage[i][j].drawRect();
     }
   }
@@ -157,11 +152,6 @@ let animationLoop = () => {
   if (Ball.rectangleCollision(Paddle)) {
     Ball.speedy *= -1;
   }
-
-  if (Ball.bottomWallCollision(Ball)) {
-    clearInterval(intervalId);
-  }
-
   if (Ball.roofCollision(Ball)) {
     Ball.speedy *= -1;
   }
@@ -172,6 +162,10 @@ let animationLoop = () => {
 
   if (Ball.rightWallCollision(Ball)) {
     Ball.speedx *= -1;
+  }
+
+  if (Ball.bottomWallCollision(Ball)) {
+    clearInterval(intervalId);
   }
 };
 
