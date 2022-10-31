@@ -1,0 +1,3 @@
+Hi! This is my rendition of the classic game Brickbreaker. The point of brickbreaker is to keep the ball bouncing
+within the game screen, avoiding having the ball touch the bottom of the screen. As the ball collides with the bricks
+they dissapear and the user's score increases. Break as many bricks as possible to acheive the highest score.
