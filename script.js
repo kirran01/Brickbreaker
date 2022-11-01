@@ -4,6 +4,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = 700;
 canvas.height = 500;
 let intervalId;
+let scoreElement = document.getElementById("score");
+let scoreValue = 0;
 
 class Rectangle {
   constructor(xpos, ypos, width, height) {
@@ -15,13 +17,13 @@ class Rectangle {
 
   rectMoveLeft() {
     if (this.xpos > 0) {
-      this.xpos -= 10;
+      this.xpos -= 15;
     }
   }
 
   rectMoveRight() {
     if (this.xpos + this.width < canvas.width) {
-      this.xpos += 10;
+      this.xpos += 15;
     }
   }
 
@@ -142,12 +144,14 @@ let animationLoop = () => {
 
   for (let i = 0; i < brickStorage.length; i++) {
     for (let j = 0; j < brickStorage[i].length; j++) {
-      if (Ball.rectangleCollision(brickStorage[i][j])) {
-        console.log("yes");
-
-        Ball.speedy *= -1;
-      }
       brickStorage[i][j].drawRect();
+      if (Ball.rectangleCollision(brickStorage[i][j])) {
+        Ball.speedy *= -1;
+        brickStorage[i].splice([j], 1);
+        scoreValue++;
+        console.log(brickStorage[i][j]);
+        scoreElement.innerHTML = scoreValue;
+      }
     }
   }
 
