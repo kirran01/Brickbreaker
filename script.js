@@ -8,6 +8,7 @@ let scoreElement = document.getElementById("score");
 let scoreValue = 0;
 let winOrLoseElement = document.getElementById("win-or-lose");
 let winOrLose = "";
+let hitMarkerElement = document.getElementById("hitmarker");
 
 class Rectangle {
   // class for bricks and paddle
@@ -113,16 +114,15 @@ class Circle {
     }
   }
 }
-let speed = 3;
+let ballSpeed = 3;
 const Paddle = new Rectangle(canvas.width / 2 - 40, canvas.height - 20, 80, 20);
-
 const Ball = new Circle(
   canvas.width / 2,
   canvas.height - 50,
   20,
   20,
-  speed,
-  -speed
+  ballSpeed,
+  -ballSpeed
 );
 
 let clearCanvas = () => {
@@ -179,6 +179,7 @@ let animationLoop = () => {
         } else {
           Ball.speedx *= -1;
         }
+        hitMarkerElement.play();
         brickStorage[i].splice([j], 1);
         scoreValue++;
         scoreElement.innerHTML = scoreValue;
