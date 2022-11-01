@@ -10,6 +10,7 @@ let winOrLoseElement = document.getElementById("win-or-lose");
 let winOrLose = "";
 
 class Rectangle {
+  // class for bricks and paddle
   constructor(xpos, ypos, width, height) {
     this.xpos = xpos;
     this.ypos = ypos;
@@ -19,13 +20,13 @@ class Rectangle {
 
   rectMoveLeft() {
     if (this.xpos > 0) {
-      this.xpos -= 15;
+      this.xpos -= 20;
     }
   }
 
   rectMoveRight() {
     if (this.xpos + this.width < canvas.width) {
-      this.xpos += 15;
+      this.xpos += 20;
     }
   }
 
@@ -35,6 +36,7 @@ class Rectangle {
 }
 
 class Circle {
+  //class for the ball
   constructor(xpos, ypos, width, height, speedx, speedy) {
     this.xpos = xpos;
     this.ypos = ypos;
@@ -64,6 +66,20 @@ class Circle {
       return false;
     }
   }
+
+  // bottomBrickCollision(Rectangle) {
+  //   if (
+  //     this.xpos < Rectangle.xpos + Rectangle.width &&
+  //     this.xpos + this.width > Rectangle.xpos &&
+  //     this.ypos == Rectangle.ypos + Rectangle.height &&
+  //     this.ypos + this.height > Rectangle.ypos
+  //   ) {
+  //     console.log("bottom brick hit");
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   topWallCollision() {
     if (this.ypos < 0) {
@@ -97,16 +113,24 @@ class Circle {
     }
   }
 }
-
+let speed = 3;
 const Paddle = new Rectangle(canvas.width / 2 - 40, canvas.height - 20, 80, 20);
 
-const Ball = new Circle(canvas.width / 2, canvas.height - 50, 20, 20, 2, -2);
+const Ball = new Circle(
+  canvas.width / 2,
+  canvas.height - 50,
+  20,
+  20,
+  speed,
+  -speed
+);
 
 let clearCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
 window.addEventListener("keydown", (e) => {
+  //controls for paddle
   switch (e.code) {
     case "ArrowLeft":
       Paddle.rectMoveLeft();
@@ -125,7 +149,7 @@ let row2BrickStorage = [];
 let row3BrickStorage = [];
 
 for (let i = 0; i <= 12; i++) {
-  //create grid
+  //create grid of bricks
   const BrickRow1 = new Rectangle(50 * i + 30, 10, 40, 40);
   const BrickRow2 = new Rectangle(50 * i + 30, 60, 40, 40);
   const BrickRow3 = new Rectangle(50 * i + 30, 110, 40, 40);
@@ -139,19 +163,24 @@ brickStorage.push(row2BrickStorage);
 brickStorage.push(row3BrickStorage);
 
 let animationLoop = () => {
+  console.log(Ball.speedy);
   clearCanvas();
   Paddle.drawRect();
   Ball.moveBall();
   Ball.drawCircle();
 
   for (let i = 0; i < brickStorage.length; i++) {
+    //collision
     for (let j = 0; j < brickStorage[i].length; j++) {
       brickStorage[i][j].drawRect();
       if (Ball.rectangleCollision(brickStorage[i][j])) {
-        Ball.speedy *= -1;
+        if ((Ball.speedy = -3)) {
+          Ball.speedy *= -1;
+        } else {
+          Ball.speedx *= -1;
+        }
         brickStorage[i].splice([j], 1);
         scoreValue++;
-        console.log(brickStorage[i][j]);
         scoreElement.innerHTML = scoreValue;
       }
     }
