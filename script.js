@@ -114,15 +114,20 @@ class Circle {
     }
   }
 }
-let ballSpeed = 3;
+
+let ballSpeedY = 3;
+let ballSpeedX = Math.floor(Math.random() * (3 - -3) + -3);
+if (ballSpeedX === 0) {
+  ballSpeedX += 1;
+}
 const Paddle = new Rectangle(canvas.width / 2 - 40, canvas.height - 20, 80, 20);
 const Ball = new Circle(
   canvas.width / 2,
   canvas.height - 50,
   20,
   20,
-  ballSpeed,
-  -ballSpeed
+  ballSpeedX,
+  -ballSpeedY
 );
 
 let clearCanvas = () => {
@@ -164,6 +169,7 @@ brickStorage.push(row3BrickStorage);
 
 let animationLoop = () => {
   console.log(Ball.speedy);
+  console.log(Ball.speedx, "x");
   clearCanvas();
   Paddle.drawRect();
   Ball.moveBall();
