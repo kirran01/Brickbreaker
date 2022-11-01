@@ -156,7 +156,11 @@ let animationLoop = () => {
       }
     }
   }
-
+  if (scoreValue == 39) {
+    winOrLose = "You Win";
+    winOrLoseElement.innerHTML = winOrLose;
+    clearInterval(intervalId);
+  }
   if (Ball.rectangleCollision(Paddle)) {
     Ball.speedy *= -1;
   }
