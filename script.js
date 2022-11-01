@@ -168,8 +168,6 @@ brickStorage.push(row2BrickStorage);
 brickStorage.push(row3BrickStorage);
 
 let animationLoop = () => {
-  console.log(Ball.speedy);
-  console.log(Ball.speedx, "x");
   clearCanvas();
   Paddle.drawRect();
   Ball.moveBall();
@@ -180,7 +178,7 @@ let animationLoop = () => {
     for (let j = 0; j < brickStorage[i].length; j++) {
       brickStorage[i][j].drawRect();
       if (Ball.rectangleCollision(brickStorage[i][j])) {
-        if (Ball.speedy == -3) {
+        if (Ball.speedy < 0) {
           Ball.speedy *= -1;
         } else {
           Ball.speedx *= -1;
@@ -201,17 +199,17 @@ let animationLoop = () => {
   if (Ball.rectangleCollision(Paddle)) {
     if (
       Ball.speedx > 0 &&
-      Ball.xpos + Ball.width < Paddle.xpos + Paddle.width / 2 - 10
+      Ball.xpos + Ball.width + Ball.speedx < Paddle.xpos + Paddle.width / 2 - 10
     ) {
       Ball.speedx *= -1;
     } else if (
       Ball.speedx < 0 &&
-      Ball.xpos > Paddle.xpos + Paddle.width / 2 + 10
+      Ball.xpos + Ball.speedx > Paddle.xpos + Paddle.width / 2 + 10
     ) {
       Ball.speedx *= -1;
-    } else {
-      Ball.speedy *= -1;
-    }
+    } 
+    Ball.speedy *= -1;
+    
   }
   if (Ball.topWallCollision(Ball)) {
     Ball.speedy *= -1;
