@@ -6,6 +6,8 @@ canvas.height = 500;
 let intervalId;
 let scoreElement = document.getElementById("score");
 let scoreValue = 0;
+let winOrLoseElement = document.getElementById("win-or-lose");
+let winOrLose = "";
 
 class Rectangle {
   constructor(xpos, ypos, width, height) {
@@ -171,6 +173,8 @@ let animationLoop = () => {
   }
 
   if (Ball.bottomWallCollision(Ball)) {
+    winOrLose = "Game Over";
+    winOrLoseElement.innerHTML = winOrLose;
     clearInterval(intervalId);
   }
 };
