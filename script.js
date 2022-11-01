@@ -176,11 +176,11 @@ let animationLoop = () => {
   Ball.drawCircle();
 
   for (let i = 0; i < brickStorage.length; i++) {
-    //collision
+    // brick collision
     for (let j = 0; j < brickStorage[i].length; j++) {
       brickStorage[i][j].drawRect();
       if (Ball.rectangleCollision(brickStorage[i][j])) {
-        if ((Ball.speedy = -3)) {
+        if (Ball.speedy == -3) {
           Ball.speedy *= -1;
         } else {
           Ball.speedx *= -1;
@@ -193,12 +193,25 @@ let animationLoop = () => {
     }
   }
   if (scoreValue == 39) {
+    //win condition
     winOrLose = "You Win";
     winOrLoseElement.innerHTML = winOrLose;
     clearInterval(intervalId);
   }
   if (Ball.rectangleCollision(Paddle)) {
-    Ball.speedy *= -1;
+    if (
+      Ball.speedx > 0 &&
+      Ball.xpos + Ball.width < Paddle.xpos + Paddle.width / 2 - 10
+    ) {
+      Ball.speedx *= -1;
+    } else if (
+      Ball.speedx < 0 &&
+      Ball.xpos > Paddle.xpos + Paddle.width / 2 + 10
+    ) {
+      Ball.speedx *= -1;
+    } else {
+      Ball.speedy *= -1;
+    }
   }
   if (Ball.topWallCollision(Ball)) {
     Ball.speedy *= -1;
@@ -213,6 +226,7 @@ let animationLoop = () => {
   }
 
   if (Ball.bottomWallCollision(Ball)) {
+    //lose condition
     winOrLose = "Game Over";
     winOrLoseElement.innerHTML = winOrLose;
     clearInterval(intervalId);
