@@ -17,14 +17,12 @@ class Rectangle {
     if (this.xpos > 0) {
       this.xpos -= 10;
     }
-    // this.xpos -= 10;
   }
 
   rectMoveRight() {
     if (this.xpos + this.width < canvas.width) {
       this.xpos += 10;
     }
-    // this.xpos += 10;
   }
 
   drawRect() {
@@ -57,14 +55,13 @@ class Circle {
       this.ypos < Rectangle.ypos + Rectangle.height &&
       this.ypos + this.height > Rectangle.ypos
     ) {
-      console.log("collided with rect");
       return true;
     } else {
       return false;
     }
   }
 
-  roofCollision() {
+  topWallCollision() {
     if (this.ypos < 0) {
       return true;
     } else {
@@ -124,6 +121,7 @@ let row2BrickStorage = [];
 let row3BrickStorage = [];
 
 for (let i = 0; i <= 12; i++) {
+  //create grid
   const BrickRow1 = new Rectangle(50 * i + 30, 10, 40, 40);
   const BrickRow2 = new Rectangle(50 * i + 30, 60, 40, 40);
   const BrickRow3 = new Rectangle(50 * i + 30, 110, 40, 40);
@@ -144,7 +142,11 @@ let animationLoop = () => {
 
   for (let i = 0; i < brickStorage.length; i++) {
     for (let j = 0; j < brickStorage[i].length; j++) {
-      // brickStorage[i][j].rectangleCollision(brickStorage[i][j]);
+      if (Ball.rectangleCollision(brickStorage[i][j])) {
+        console.log("yes");
+
+        Ball.speedy *= -1;
+      }
       brickStorage[i][j].drawRect();
     }
   }
@@ -152,7 +154,7 @@ let animationLoop = () => {
   if (Ball.rectangleCollision(Paddle)) {
     Ball.speedy *= -1;
   }
-  if (Ball.roofCollision(Ball)) {
+  if (Ball.topWallCollision(Ball)) {
     Ball.speedy *= -1;
   }
 
