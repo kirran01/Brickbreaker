@@ -11,10 +11,17 @@
     <h1>Brickbreaker</h1>
     <div id="game-board">
       <canvas id="canvas" width="700" height="500"></canvas>
+      <audio
+        id="hitmarker"
+        src="./hitmarker.m4a"
+        style="display: none"
+        type="audio/mp3"
+      ></audio>
     </div>
     <div class="UI">
       <button id="start-button">Start Game</button>
-      <h2>score: <span id="score">0</span></h2>
+      <h2><span>score: </span><span id="score">0</span></h2>
+      <h2><span id="win-or-lose"> </span></h2>
     </div>
     <footer>
       <p>The classic game "Brickbreaker" made in Javascript canvas.</p>

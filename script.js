@@ -9,6 +9,8 @@ let scoreValue = 0;
 let winOrLoseElement = document.getElementById("win-or-lose");
 let winOrLose = "";
 let hitMarkerElement = document.getElementById("hitmarker");
+let img = new Image();
+img.src = "./circle2.png";
 
 class Rectangle {
   // class for bricks and paddle
@@ -47,7 +49,8 @@ class Circle {
     this.speedx = speedx;
   }
   drawCircle() {
-    ctx.fillRect(this.xpos, this.ypos, this.width, this.height);
+    // ctx.fillRect(this.xpos, this.ypos, this.width, this.height);
+    ctx.drawImage(img, this.xpos, this.ypos, this.height, this.width);
   }
 
   moveBall() {
@@ -68,19 +71,19 @@ class Circle {
     }
   }
 
-  // bottomBrickCollision(Rectangle) {
-  //   if (
-  //     this.xpos < Rectangle.xpos + Rectangle.width &&
-  //     this.xpos + this.width > Rectangle.xpos &&
-  //     this.ypos == Rectangle.ypos + Rectangle.height &&
-  //     this.ypos + this.height > Rectangle.ypos
-  //   ) {
-  //     console.log("bottom brick hit");
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  bottomBrickCollision(Rectangle) {
+    if (
+      this.xpos < Rectangle.xpos + Rectangle.width &&
+      this.xpos + this.width > Rectangle.xpos &&
+      this.ypos == Rectangle.ypos + Rectangle.height &&
+      this.ypos + this.height > Rectangle.ypos
+    ) {
+      console.log("bottom brick hit");
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   topWallCollision() {
     if (this.ypos < 0) {
@@ -207,9 +210,8 @@ let animationLoop = () => {
       Ball.xpos + Ball.speedx > Paddle.xpos + Paddle.width / 2 + 10
     ) {
       Ball.speedx *= -1;
-    } 
+    }
     Ball.speedy *= -1;
-    
   }
   if (Ball.topWallCollision(Ball)) {
     Ball.speedy *= -1;
