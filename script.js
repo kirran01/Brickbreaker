@@ -181,9 +181,16 @@ let animationLoop = () => {
     for (let j = 0; j < brickStorage[i].length; j++) {
       brickStorage[i][j].drawRect();
       if (Ball.rectangleCollision(brickStorage[i][j])) {
-        if (Ball.speedy < 0) {
+        if (Ball.speedy < 0 && Ball.ypos - brickStorage[i][j].ypos > 0) {
           Ball.speedy *= -1;
-        } else {
+        }
+        if (Ball.speedy > 0 && Ball.ypos - brickStorage[i][j].ypos < 0) {
+          Ball.speedy *= -1;
+        }
+        if (Ball.speedy < 0 && Ball.xpos - brickStorage[i][j].xpos < 0) {
+          Ball.speedx *= -1;
+        }
+        if (Ball.speedy < 0 && Ball.xpos - brickStorage[i][j].xpos > 0) {
           Ball.speedx *= -1;
         }
         hitMarkerElement.play();
