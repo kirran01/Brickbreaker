@@ -175,8 +175,9 @@ brickStorage.push(row2BrickStorage);
 brickStorage.push(row3BrickStorage);
 
 let animationLoop = () => {
+  frameCount++;
+  console.log(frameCount);
   clearCanvas();
-  console.log(Ball.speedx);
   Paddle.drawRect();
   Ball.moveBall();
   Ball.drawCircle();
@@ -273,10 +274,11 @@ window.onload = () => {
   };
 
   function startGame() {
-    intervalId = setInterval(animationLoop, 16);
-    console.log(speedElement.value);
-    if (speedElement.value) {
-      Ball.speedy *= speedElement.value;
+    if (frameCount == 0) {
+      intervalId = setInterval(animationLoop, 16);
+      if (speedElement.value) {
+        Ball.speedy *= speedElement.value;
+      }
     }
   }
 };
