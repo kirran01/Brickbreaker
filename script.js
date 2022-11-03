@@ -123,7 +123,7 @@ class Circle {
 }
 
 let ballSpeedY = 3;
-let ballSpeedX = Math.floor(Math.random() * (2 - -2) + -2);
+let ballSpeedX = 1;
 if (ballSpeedX === 0) {
   ballSpeedX += 1;
 }
@@ -176,6 +176,7 @@ brickStorage.push(row3BrickStorage);
 
 let animationLoop = () => {
   clearCanvas();
+  console.log(Ball.speedx);
   Paddle.drawRect();
   Ball.moveBall();
   Ball.drawCircle();
@@ -212,6 +213,21 @@ let animationLoop = () => {
   }
   if (Ball.rectangleCollision(Paddle)) {
     paddleSoundElement.play();
+    //right edge collision in positive direction increases xspeed
+    if (
+      Ball.speedx > 0 &&
+      Ball.xpos + Ball.width > Paddle.xpos + Paddle.width / 2 + 10
+    ) {
+      Ball.speedx += 0.5;
+    }
+ //left edge collision in negative direction decreases xspeed
+    if (
+      Ball.speedx < 0 &&
+      Ball.xpos + Ball.width < Paddle.xpos + Paddle.width / 2 - 10
+    ) {
+      Ball.speedx -= 0.5;
+    }
+
     if (
       Ball.speedx > 0 &&
       Ball.xpos + Ball.width + Ball.speedx < Paddle.xpos + Paddle.width / 2 - 10
@@ -263,8 +279,4 @@ window.onload = () => {
       Ball.speedy *= speedElement.value;
     }
   }
-};
-
-let refresh = () => {
-  location.reload();
 };
