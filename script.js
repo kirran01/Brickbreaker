@@ -9,6 +9,9 @@ let scoreValue = 0;
 let winOrLoseElement = document.getElementById("win-or-lose");
 let winOrLose = "";
 let hitMarkerElement = document.getElementById("hitmarker");
+let paddleSoundElement = document.getElementById("paddle");
+let winSoundElement = document.getElementById("win");
+let bruhSoundElement = document.getElementById("bruh");
 let img = new Image();
 img.src = "./circle2.png";
 let startButtonElement = document.getElementById("start-button");
@@ -75,9 +78,9 @@ class Circle {
 
   bottomBrickCollision(Bricks) {
     if (
-      this.ypos - Bricks.ypos <= Bricks.height &&
-      this.xpos + this.width >= Bricks.xpos &&
-      this.xpos <= Bricks.xpos + Bricks.width
+      this.ypos - Bricks.ypos < Bricks.height &&
+      this.xpos + this.width > Bricks.xpos &&
+      this.xpos < Bricks.xpos + Bricks.width
     ) {
       return true;
     } else {
@@ -187,7 +190,6 @@ let animationLoop = () => {
         } else {
           Ball.speedx *= -1;
         }
-
         hitMarkerElement.play();
         brickStorage[i].splice([j], 1);
         scoreValue++;
@@ -197,13 +199,15 @@ let animationLoop = () => {
   }
   if (scoreValue == 39) {
     //win condition
+    winSoundElement.play();
     winOrLose = "You Win";
     winOrLoseElement.innerHTML = winOrLose;
-    startButton = "Try Again?";
+    startButton = "Play Again";
     startButtonElement.innerHTML = startButton;
     clearInterval(intervalId);
   }
   if (Ball.rectangleCollision(Paddle)) {
+    paddleSoundElement.play();
     if (
       Ball.speedx > 0 &&
       Ball.xpos + Ball.width + Ball.speedx < Paddle.xpos + Paddle.width / 2 - 10
@@ -231,6 +235,7 @@ let animationLoop = () => {
 
   if (Ball.bottomWallCollision(Ball)) {
     //lose condition
+    bruhSoundElement.play();
     winOrLose = "Game Over";
     winOrLoseElement.innerHTML = winOrLose;
     startButton = "Try Again?";
