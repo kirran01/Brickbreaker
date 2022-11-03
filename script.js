@@ -11,6 +11,8 @@ let winOrLose = "";
 let hitMarkerElement = document.getElementById("hitmarker");
 let img = new Image();
 img.src = "./circle2.png";
+let startButtonElement = document.getElementById("start-button");
+let startButton = "";
 
 class Rectangle {
   // class for bricks and paddle
@@ -71,14 +73,12 @@ class Circle {
     }
   }
 
-  bottomBrickCollision(Rectangle) {
+  bottomBrickCollision(Bricks) {
     if (
-      this.xpos < Rectangle.xpos + Rectangle.width &&
-      this.xpos + this.width > Rectangle.xpos &&
-      this.ypos == Rectangle.ypos + Rectangle.height &&
-      this.ypos + this.height > Rectangle.ypos
+      this.ypos - Bricks.ypos <= Bricks.height &&
+      this.xpos + this.width >= Bricks.xpos &&
+      this.xpos <= Bricks.xpos + Bricks.width
     ) {
-      console.log("bottom brick hit");
       return true;
     } else {
       return false;
@@ -181,18 +181,13 @@ let animationLoop = () => {
     for (let j = 0; j < brickStorage[i].length; j++) {
       brickStorage[i][j].drawRect();
       if (Ball.rectangleCollision(brickStorage[i][j])) {
-        if (Ball.speedy < 0 && Ball.ypos - brickStorage[i][j].ypos > 0) {
+        console.log(Ball.bottomBrickCollision(brickStorage[i][j]));
+        if (Ball.speedy < 0) {
           Ball.speedy *= -1;
-        }
-        if (Ball.speedy > 0 && Ball.ypos - brickStorage[i][j].ypos < 0) {
-          Ball.speedy *= -1;
-        }
-        if (Ball.speedy < 0 && Ball.xpos - brickStorage[i][j].xpos < 0) {
+        } else {
           Ball.speedx *= -1;
         }
-        if (Ball.speedy < 0 && Ball.xpos - brickStorage[i][j].xpos > 0) {
-          Ball.speedx *= -1;
-        }
+
         hitMarkerElement.play();
         brickStorage[i].splice([j], 1);
         scoreValue++;
@@ -204,6 +199,8 @@ let animationLoop = () => {
     //win condition
     winOrLose = "You Win";
     winOrLoseElement.innerHTML = winOrLose;
+    startButton = "Try Again?";
+    startButtonElement.innerHTML = startButton;
     clearInterval(intervalId);
   }
   if (Ball.rectangleCollision(Paddle)) {
@@ -236,6 +233,11 @@ let animationLoop = () => {
     //lose condition
     winOrLose = "Game Over";
     winOrLoseElement.innerHTML = winOrLose;
+    startButton = "Try Again?";
+    startButtonElement.innerHTML = startButton;
+    document.getElementById("start-button").onclick = () => {
+      location.reload();
+    };
     clearInterval(intervalId);
   }
 };
@@ -248,4 +250,8 @@ window.onload = () => {
   function startGame() {
     intervalId = setInterval(animationLoop, 16);
   }
+};
+
+let refresh = () => {
+  location.reload();
 };
