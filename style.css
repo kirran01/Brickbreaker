@@ -44,3 +44,21 @@ button:hover {
 .UI h2{
 margin:0 10px 0 10px;
 }
+
+
+#speed{
+    border: 3px solid #000;
+    border-radius: 5px;
+    height: 40px;
+    color: #282828;
+    box-sizing: border-box;
+    user-select: auto;
+    font-size: 16px;
+    padding: 0 6px;
+    padding-left: 12px;
+}
+
+#speed :focus{
+    border: 3px solid #5551ff;
+}
+

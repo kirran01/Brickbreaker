@@ -216,14 +216,14 @@ let animationLoop = () => {
     //right edge collision in positive direction increases xspeed
     if (
       Ball.speedx > 0 &&
-      Ball.xpos + Ball.width > Paddle.xpos + Paddle.width / 2 + 10
+      Ball.xpos + Ball.width > Paddle.xpos + Paddle.width / 2 + 30
     ) {
       Ball.speedx += 0.5;
     }
- //left edge collision in negative direction decreases xspeed
+    //left edge collision in negative direction decreases xspeed
     if (
       Ball.speedx < 0 &&
-      Ball.xpos + Ball.width < Paddle.xpos + Paddle.width / 2 - 10
+      Ball.xpos + Ball.width < Paddle.xpos + Paddle.width / 2 - 20
     ) {
       Ball.speedx -= 0.5;
     }
