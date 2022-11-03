@@ -12,6 +12,7 @@ let hitMarkerElement = document.getElementById("hitmarker");
 let paddleSoundElement = document.getElementById("paddle");
 let winSoundElement = document.getElementById("win");
 let bruhSoundElement = document.getElementById("bruh");
+let speedElement = document.getElementById("speed");
 let img = new Image();
 img.src = "./circle2.png";
 let startButtonElement = document.getElementById("start-button");
@@ -122,7 +123,7 @@ class Circle {
 }
 
 let ballSpeedY = 3;
-let ballSpeedX = Math.floor(Math.random() * (3 - -3) + -3);
+let ballSpeedX = Math.floor(Math.random() * (2 - -2) + -2);
 if (ballSpeedX === 0) {
   ballSpeedX += 1;
 }
@@ -204,6 +205,9 @@ let animationLoop = () => {
     winOrLoseElement.innerHTML = winOrLose;
     startButton = "Play Again";
     startButtonElement.innerHTML = startButton;
+    document.getElementById("start-button").onclick = () => {
+      location.reload();
+    };
     clearInterval(intervalId);
   }
   if (Ball.rectangleCollision(Paddle)) {
@@ -254,6 +258,10 @@ window.onload = () => {
 
   function startGame() {
     intervalId = setInterval(animationLoop, 16);
+    console.log(speedElement.value);
+    if (speedElement.value) {
+      Ball.speedy *= speedElement.value;
+    }
   }
 };
 
