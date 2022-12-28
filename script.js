@@ -263,6 +263,12 @@ let animationLoop = () => {
     startButtonElement.innerHTML = startButton;
     document.getElementById("start-button").onclick = () => {
       location.reload();
+
+      // setInterval(animationLoop, 16);
+      // clearCanvas();
+      // Paddle.drawRect();
+      // Ball.moveBall();
+      // Ball.drawCircle();
     };
     clearInterval(intervalId);
   }
