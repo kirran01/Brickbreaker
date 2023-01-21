@@ -160,6 +160,21 @@ let row1BrickStorage = [];
 let row2BrickStorage = [];
 let row3BrickStorage = [];
 
+/// mobile? 
+
+window.addEventListener('touchstart', function (event) {
+    var touch = event.touches[0];
+  var touchX = touch.clientX;
+   if (touchX < window.innerWidth / 2) {
+     Paddle.rectMoveLeft();
+  } else if (touchX > window.innerWidth / 2) {
+
+    Paddle.rectMoveRight();
+  }
+});
+
+///
+
 for (let i = 0; i <= 12; i++) {
   //create grid of bricks
   const BrickRow1 = new Rectangle(50 * i + 30, 10, 40, 40);
