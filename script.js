@@ -1,8 +1,6 @@
 console.log("god is good");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-canvas.width = 700;
-canvas.height = 500;
 let intervalId;
 let scoreElement = document.getElementById("score");
 let scoreValue = 0;
@@ -17,6 +15,23 @@ let img = new Image();
 img.src = "./circle2.png";
 let startButtonElement = document.getElementById("start-button");
 let startButton = "";
+var rows;
+function myFunction(x) {
+  if (x.matches) {
+    // If media query matches
+    canvas.width = 500;
+    canvas.height = 500;
+    rows = 8;
+  } else {
+    canvas.width = 700;
+    canvas.height = 500;
+    rows = 12;
+  }
+}
+
+var x = window.matchMedia("(max-width: 600px)");
+myFunction(x); // Call listener function at run time
+x.addListener(myFunction); // Attach listener function on state changes
 
 class Rectangle {
   // class for bricks and paddle
@@ -160,22 +175,22 @@ let row1BrickStorage = [];
 let row2BrickStorage = [];
 let row3BrickStorage = [];
 
-/// mobile? 
+/// mobile?
 
-window.addEventListener('touchstart', function (event) {
-    var touch = event.touches[0];
+window.addEventListener("touchstart", function (event) {
+  var touch = event.touches[0];
   var touchX = touch.clientX;
-   if (touchX < window.innerWidth / 2) {
-     Paddle.rectMoveLeft();
+  if (touchX < window.innerWidth / 2) {
+    Paddle.rectMoveLeft();
   } else if (touchX > window.innerWidth / 2) {
-
     Paddle.rectMoveRight();
   }
 });
 
 ///
 
-for (let i = 0; i <= 12; i++) {
+//change number of iterations to reduce brick count.
+for (let i = 0; i <= rows; i++) {
   //create grid of bricks
   const BrickRow1 = new Rectangle(50 * i + 30, 10, 40, 40);
   const BrickRow2 = new Rectangle(50 * i + 30, 60, 40, 40);
@@ -278,12 +293,6 @@ let animationLoop = () => {
     startButtonElement.innerHTML = startButton;
     document.getElementById("start-button").onclick = () => {
       location.reload();
-
-      // setInterval(animationLoop, 16);
-      // clearCanvas();
-      // Paddle.drawRect();
-      // Ball.moveBall();
-      // Ball.drawCircle();
     };
     clearInterval(intervalId);
   }
