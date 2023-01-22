@@ -29,7 +29,7 @@ function myFunction(x) {
   }
 }
 
-var x = window.matchMedia("(max-width: 640px)");
+var x = window.matchMedia("(max-width: 700px)");
 myFunction(x); // Call listener function at run time
 x.addListener(myFunction); // Attach listener function on state changes
 
