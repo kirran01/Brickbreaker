@@ -18,10 +18,9 @@ let startButton = "";
 var rows;
 function myFunction(x) {
   if (x.matches) {
-    // If media query matches
-    canvas.width = 500;
+    canvas.width = 400;
     canvas.height = 500;
-    rows = 8;
+    rows = 6;
   } else {
     canvas.width = 700;
     canvas.height = 500;
